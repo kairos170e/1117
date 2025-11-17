@@ -7,6 +7,7 @@ const saveApiKeyButton = document.getElementById('saveApiKeyButton');
 const chatHistory = document.getElementById('chatHistory');
 const messageInput = document.getElementById('messageInput');
 const sendMessageButton = document.getElementById('sendMessageButton');
+const typingIndicator = document.querySelector('.typing-indicator');
 
 let genAI;
 let chat;
@@ -59,7 +60,7 @@ async function sendMessage() {
     appendMessage('user', message);
     messageInput.value = '';
     sendMessageButton.disabled = true;
-    sendMessageButton.textContent = '思考中...';
+    typingIndicator.classList.remove('hidden');
 
     try {
         const result = await chat.sendMessage(message);
@@ -71,7 +72,7 @@ async function sendMessage() {
         appendMessage('model', `發生錯誤：\n\n${error.toString()}`);
     } finally {
         sendMessageButton.disabled = false;
-        sendMessageButton.textContent = '傳送';
+        typingIndicator.classList.add('hidden');
     }
 }
 
