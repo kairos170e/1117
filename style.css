@@ -125,6 +125,23 @@ body {
     background-color: #fff;
 }
 
+#suggestionArea {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.suggestionButton {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 8px 15px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 #messageInput {
     flex-grow: 1;
     padding: 0.8rem;

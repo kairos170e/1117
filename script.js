@@ -8,6 +8,7 @@ const chatHistory = document.getElementById('chatHistory');
 const messageInput = document.getElementById('messageInput');
 const sendMessageButton = document.getElementById('sendMessageButton');
 const typingIndicator = document.querySelector('.typing-indicator');
+const suggestionArea = document.getElementById('suggestionArea');
 
 let genAI;
 let chat;
@@ -32,6 +33,15 @@ function initializeChat() {
             alert("無效的 API 金鑰或初始化失敗，請重新輸入。");
             localStorage.removeItem(GEMINI_API_KEY_LS);
         }
+    }
+    toggleSuggestionArea();
+}
+
+function toggleSuggestionArea() {
+    if (chatHistory.children.length === 0) {
+        suggestionArea.classList.remove('hidden');
+    } else {
+        suggestionArea.classList.add('hidden');
     }
 }
 
@@ -73,8 +83,17 @@ async function sendMessage() {
     } finally {
         sendMessageButton.disabled = false;
         typingIndicator.classList.add('hidden');
+        toggleSuggestionArea();
     }
 }
+
+suggestionArea.addEventListener('click', (e) => {
+    if (e.target.classList.contains('suggestionButton')) {
+        const message = e.target.textContent;
+        messageInput.value = message;
+        sendMessage();
+    }
+});
 
 saveApiKeyButton.addEventListener('click', () => {
     const apiKey = apiKeyInput.value.trim();
